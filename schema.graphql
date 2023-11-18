@@ -1,0 +1,70 @@
+scalar GraphQLDate
+enum EmployeeType {
+  FullTime
+  PartTime
+  Contract
+  Seasonal
+}
+
+type Employee {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    age: Int!
+    dateOfJoining: GraphQLDate!
+    title: String!
+    department: String!
+    employeeType: String!
+    currentStatus: Boolean!
+}
+
+"Toned down Employee, used as inputs, without server generated values."
+input EmployeeInputs {
+    firstName: String!
+    lastName: String!
+    age: Int!
+    dateOfJoining: GraphQLDate!
+    title: String!
+    department: String!
+    employeeType: String!
+    currentStatus: Boolean!
+}
+type EmployeeRetrivment {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  age: Int!
+  dateOfJoining: GraphQLDate!
+  title: String!
+  department: String!
+  employeeType: String!
+  currentStatus: Boolean!
+  years: Int!
+  months: Int!
+  days: Int!
+}
+input EmployeeUpdateInputs {
+    firstName: String!
+    lastName: String!
+    age: Int!
+    dateOfJoining: GraphQLDate!
+    title: String!
+    department: String!
+    employeeType: String!
+    currentStatus: Boolean!
+}
+
+##### Top level declarations
+
+type Query {
+  employeeList(employeeType: EmployeeType): [Employee!]!
+  employee(id: Int!): EmployeeRetrivment
+  upcomingRetirees(employeeType: EmployeeType): [Employee!]
+}
+
+type Mutation {
+  employeeAdd(employee: EmployeeInputs!): Employee!
+  employeeUpdate(id: Int!, changes: EmployeeUpdateInputs!): Employee!
+  employeeDelete(id: Int!): Boolean!
+
+}
